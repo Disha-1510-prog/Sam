@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Royal Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Playfair+Display:ital,wght@0,700;1,700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --royal-black: #050505;
+            --velvet-maroon: #2b0202;
+            --gold-leaf: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, var(--velvet-maroon) 0%, var(--royal-black) 100%);
+            color: #fcf6ba; font-family: 'Playfair Display', serif;
+            overflow: hidden; display: flex; justify-content: center; align-items: center;
+        }
+
+        /* Golden Text Styling */
+        .gold-text {
+            background: var(--gold-leaf);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Cinzel Decorative', cursive;
+            filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.5));
+        }
+
+        /* Floating Hearts */
+        .heart {
+            position: absolute; color: rgba(212, 175, 55, 0.4);
+            font-size: 20px; user-select: none; pointer-events: none;
+            z-index: 5; animation: floatUp 7s linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Screens & Transitions */
+        .screen {
+            display: none; flex-direction: column; align-items: center;
+            text-align: center; z-index: 20; max-width: 90%;
+            animation: royalFade 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .active { display: flex; }
+
+        @keyframes royalFade {
+            from { opacity: 0; transform: scale(0.95); filter: blur(15px); }
+            to { opacity: 1; transform: scale(1); filter: blur(0px); }
+        }
+
+        .frame {
+            border: 2px solid #aa771c; padding: 40px;
+            border-image: var(--gold-leaf) 1;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 50px rgba(170, 119, 28, 0.1);
+        }
+
+        input {
+            background: transparent; border: none; border-bottom: 1px solid #aa771c;
+            color: #fcf6ba; font-size: 1.2rem; margin: 20px 0; padding: 10px;
+            text-align: center; outline: none; width: 250px;
+        }
+
+        button {
+            background: var(--gold-leaf); color: #2b0202; border: none;
+            padding: 15px 45px; font-family: 'Cinzel Decorative', cursive;
+            font-weight: bold; cursor: pointer; margin-top: 30px;
+            transition: 0.4s; letter-spacing: 2px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-radius: 2px;
+        }
+
+        button:hover { transform: translateY(-2px); filter: brightness(1.2); }
+
+        .hi-sam { font-family: 'Great Vibes', cursive; font-size: 7rem; margin: 0; }
+        
+        /* Countdown Timer */
+        #timer {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 1.5rem; color: #fcf6ba; margin-top: 20px;
+            letter-spacing: 4px; border-top: 1px solid #aa771c; padding-top: 15px;
+        }
+
+        .option-btn {
+            background: transparent; color: #fcf6ba;
+            border: 1px solid #aa771c; width: 320px; margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="heart-container"></div>
+
+    <div id="loginScreen" class="screen active">
+        <div class="frame">
+            <h1 class="gold-text">Imperial Entry</h1>
+            <input type="text" id="username" placeholder="Name">
+            <input type="password" id="password" placeholder="Passcode">
+            <br>
+            <button onclick="checkLogin()">UNLOCK</button>
+        </div>
+    </div>
+
+    <div id="welcomeScreen" class="screen">
+        <h2 class="gold-text hi-sam">Hi Sam!</h2>
+        <p style="font-style: italic; letter-spacing: 2px;">A royal decree awaits your presence.</p>
+        <button onclick="next('proposalScreen')">PROCEED</button>
+    </div>
+
+    <div id="proposalScreen" class="screen">
+        <h2 class="gold-text" style="font-size: 2.5rem;">Will you be my valentine?</h2>
+        <button class="option-btn" onclick="next('finalScreen')">Option 1 - Yes</button>
+        <button class="option-btn" onclick="next('finalScreen')">Option 2 - Option 1</button>
+        <button class="option-btn" onclick="next('finalScreen')">Option 3 - All of the above</button>
+    </div>
+
+    <div id="finalScreen" class="screen">
+        <div class="frame">
+            <h1 class="gold-text" style="font-size: 3rem;">Congratulations!</h1>
+            <p style="font-family: 'Great Vibes', cursive; font-size: 2.2rem; margin: 10px 0;">
+                You are officially booked for this year's <br> Valentine's Day!
+            </p>
+            
+            <p style="max-width: 500px; line-height: 1.6; color: #d4af37; font-style: italic;">
+                "To the king of my heart, I can't wait to spend this day 
+                wrapped in your love. You are my greatest adventure."
+            </p>
+
+            <div id="timer">00d 00h 00m 00s</div>
+            <p style="font-size: 0.8rem; letter-spacing: 2px; margin-top: 10px;">UNTIL OUR SPECIAL DAY</p>
+        </div>
+    </div>
+
+    <script>
+        // Floating Hearts logic
+        setInterval(() => {
+            const container = document.getElementById('heart-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 7000);
+        }, 400);
+
+        // Login Logic
+        function checkLogin() {
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            if(u === "Sasha" && p === "220125") next('welcomeScreen');
+            else alert("The palace gates remain closed. Try again, love.");
+        }
+
+        function next(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if(id === 'finalScreen') startTimer();
+        }
+
+        // Countdown Timer Logic (Target: Feb 14, 2026)
+        function startTimer() {
+            const countDownDate = new Date("Feb 14, 2026 00:00:00").getTime();
+            setInterval(() => {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
